@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList", "ToDoList\ToDoList.csproj", "{81155032-32F2-4AB4-92A1-7D386808ABA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{10C7EFDD-B4E7-4C97-9B28-D75D0C79EF1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListDomain", "ToDoListDomain\ToDoListDomain.csproj", "{852DFD95-121E-4A76-94BF-F271C5E6BC8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{C2BDB43C-8283-457F-A5F0-AB9AD804FED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.DAL", "ToDoList.DAL\ToDoList.DAL.csproj", "{6ED89878-2C60-4086-8E8D-5BAA1F80165E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81155032-32F2-4AB4-92A1-7D386808ABA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81155032-32F2-4AB4-92A1-7D386808ABA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81155032-32F2-4AB4-92A1-7D386808ABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81155032-32F2-4AB4-92A1-7D386808ABA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852DFD95-121E-4A76-94BF-F271C5E6BC8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852DFD95-121E-4A76-94BF-F271C5E6BC8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852DFD95-121E-4A76-94BF-F271C5E6BC8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852DFD95-121E-4A76-94BF-F271C5E6BC8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED89878-2C60-4086-8E8D-5BAA1F80165E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED89878-2C60-4086-8E8D-5BAA1F80165E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED89878-2C60-4086-8E8D-5BAA1F80165E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED89878-2C60-4086-8E8D-5BAA1F80165E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{852DFD95-121E-4A76-94BF-F271C5E6BC8F} = {10C7EFDD-B4E7-4C97-9B28-D75D0C79EF1C}
+		{6ED89878-2C60-4086-8E8D-5BAA1F80165E} = {C2BDB43C-8283-457F-A5F0-AB9AD804FED6}
+	EndGlobalSection
+EndGlobal

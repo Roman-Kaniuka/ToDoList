@@ -1,0 +1,11 @@
+D:\Р\C#\ToDoList\ToDoListDomain\bin\Debug\net7.0\ToDoListDomain.deps.json
+D:\Р\C#\ToDoList\ToDoListDomain\bin\Debug\net7.0\ToDoListDomain.dll
+D:\Р\C#\ToDoList\ToDoListDomain\bin\Debug\net7.0\ToDoListDomain.pdb
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.AssemblyInfoInputs.cache
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.AssemblyInfo.cs
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.csproj.CoreCompileInputs.cache
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.dll
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\refint\ToDoListDomain.dll
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ToDoListDomain.pdb
+D:\Р\C#\ToDoList\ToDoListDomain\obj\Debug\net7.0\ref\ToDoListDomain.dll
