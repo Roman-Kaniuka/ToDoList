@@ -21,16 +21,42 @@
     </div>
     <button id="createTask" class="btn btn-primary">Створити</button>
 </form>
+@*TODO: #18 Додаємо табличку представлення даних на сторінці використовуючи сайт https://datatables.net/*@
+<table class="table table-dark table-hover" id="taskTableId">
+    <thead>
+    <tr>
+        <th>Назва</th>
+        <th>Пріоритет</th>
+        <th>Опис</th>
+        <th>Готовність</th>
+        <th>Дія</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
 @*TODO: #7 для створення реагування на подію "клік" використовуємо бібліотеку JS "jQuery".  *@
 @*
 В секції "section Scripts" прописуємо всі скрипти *@
-@section Scripts 
+
+@section Scripts
 {
-    
-    
-    
+    @*додаємо бібліотеку для роботи з табличкою з сайту https://datatables.net/*@
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    @*додаємо бібліотеку з сайту  https://sweetalert2.github.io/#download *@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+    
+    @*TODO: #19 За допомогою "jQuery" робимо запит до таблиці через  id="taskTableId"*@
+    let dataTable = $('#taskTableId').DataTable({
+    info:true, //загальна інформація про таблицю 
+    serverSide:false, //якщо true то "sorting" та "paging" буде відбуватися на стороні сервера
+    searching: false, //рядок пошуку
+    paging: true, //к-сть елементів які буде показано
+    sorting: false, //сортування
+    
+    });
     //Кнопка "Створити" має id="createTask", на цей id ми навісимо подію "клік"
         $('#createTask').on('click', function (e){  //для функції function () передали параметр "е" щоб потім викликати на ньому
             e.preventDefault();                     //цей метод який не обновляє значення полів після натиску на кнопку "Створити"
@@ -75,6 +101,5 @@
             })
         });
     </script>
-    @*додаємо бібліотеку з сайту  https://sweetalert2.github.io/#download *@
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 }
