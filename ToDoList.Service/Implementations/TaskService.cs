@@ -27,6 +27,7 @@ public class TaskService : ITaskService
         
         try
         {
+            model.Validate();
             //перевіряємо чи є в таблиці завдання за сьогоднішній день зі схожою назвою
             _logger.LogInformation($"Запит на створення задачі - {model.Name}");
             var task = await _taskRepository.GetAll()
@@ -70,6 +71,7 @@ public class TaskService : ITaskService
             _logger.LogError(ex, $"[TaskService.Create()]-{ex.Message}");
             return new BaseResponse<TaskEntity>()
             {
+                Description = $"{ex.Message}",
                 StatusCode = StatusCode.InternalServerError
             };
         }

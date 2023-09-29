@@ -10,4 +10,23 @@ public class CreateTaskViewModel
     public string Name { get; set; }
     public string Description { get; set; }
     public Priority Priority { get; set; }
+
+    //TODO: #17 Додаємо валідацію для перевірки чи заповнені всі поля
+    public void Validate()
+    {
+        // перевіряємо чи дійсно поле пусте якщо так то кидаємо виключення
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                throw new ArgumentNullException(Name, "Вкажіть назву задачі та її опис");
+            }
+            throw new ArgumentNullException(Name, "Вкажіть назву задачі");
+            
+        }
+        if (string.IsNullOrWhiteSpace(Description))
+        {
+            throw new ArgumentNullException(Description, "Вкажіть опис завдання");
+        }
+    }
 }
