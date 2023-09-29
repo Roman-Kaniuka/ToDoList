@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ToDoListDomain.Entity;
 
 namespace ToDoList.DAL;
-
+//TODO: #3 Створюємо клас для роботи з базой даних
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options): base (options) //такий параметр конструктора потрібний в майбутньому для роботи з ASP.NET Core 

@@ -1,0 +1,17 @@
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoList.Service.deps.json
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoList.Service.dll
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoList.Service.pdb
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoList.DAL.dll
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoListDomain.dll
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoList.DAL.pdb
+D:\Р\C#\ToDoList\ToDoList.Service\bin\Debug\net7.0\ToDoListDomain.pdb
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.csproj.AssemblyReference.cache
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.AssemblyInfoInputs.cache
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.AssemblyInfo.cs
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.csproj.CoreCompileInputs.cache
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.csproj.CopyComplete
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.dll
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\refint\ToDoList.Service.dll
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ToDoList.Service.pdb
+D:\Р\C#\ToDoList\ToDoList.Service\obj\Debug\net7.0\ref\ToDoList.Service.dll

@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.custom-popup-class {
+  background: rgba(0,0,123,0.2)
+}

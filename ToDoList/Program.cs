@@ -1,14 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoList.DAL;
+using ToDoList.DAL.Interfaces;
+using ToDoList.DAL.Repositories;
+using ToDoList.Service.Implementations;
+using ToDoList.Service.Interfaces;
+using ToDoListDomain.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//додали NuGet пакет "RazorRuntime" для того щоб автоматично обновляти сторінку (не білдити зміни) та викликаємо метод ".AddRazorRuntimeCompilation()"
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddControllersWithViews();
+//TODO: #14 треба зареєструвати "TaskRepository" та "TaskService" щоб все працювало
+//метод "AddScoped" створює один екземпляр об'єкта для всього запиту.
+builder.Services.AddScoped<IBaseRepository<TaskEntity>, TaskRepository>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 //отримуємо рядок підключення який ми прописали в appsettings.json
 var connectionString = builder.Configuration.GetConnectionString(("MSSQL"));
 
+//TODO: #4 Всатновлюємо звязок ASP.NET з класом контекста "AppDbContext"
 //вказуємо який клас контекст ми будемо використовувати
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

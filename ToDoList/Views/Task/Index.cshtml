@@ -1,8 +1,80 @@
-﻿@{
+﻿@using ToDoListDomain.Enum
+@{
     ViewData["Title"] = "Home Page";
 }
+@*TODO #6 Верстаємо форму з полями вводу користувачем значень для "завдань"*@
+<h4 class="mb-3 text-muted">Створення завдання</h4>
+<form id="createTaskForm">
+    <div class="mb-3">
+        <label class="form-label">Назва задачі</label>
+        <input name="name" type="text" class="form-control"/>
+    </div>
+    <label class="form-label">Пріоритет задачі</label>
+    @*
+    створюємо список "priority" з Enum який ми створювали за допомогою тега "asp-items="Html.GetEnumSelectList<Priority>()"
+    *@
+    <select name="priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="mb-3">
+        <label class="form-label">Опис завдання</label>
+        <textarea name="description" type="text" class="form-control" rows="3"></textarea>
+    </div>
+    <button id="createTask" class="btn btn-primary">Створити</button>
+</form>
+
+@*TODO: #7 для створення реагування на подію "клік" використовуємо бібліотеку JS "jQuery".  *@
+@*
+В секції "section Scripts" прописуємо всі скрипти *@
+@section Scripts 
+{
+    
+    
+    
+    <script>
+    //Кнопка "Створити" має id="createTask", на цей id ми навісимо подію "клік"
+        $('#createTask').on('click', function (e){  //для функції function () передали параметр "е" щоб потім викликати на ньому
+            e.preventDefault();                     //цей метод який не обновляє значення полів після натиску на кнопку "Створити"
+            //ajax-для відправки даних без перезавантаження сторінки
+            $.ajax({
+            
+                type: 'POST', //тип запиту "РОST" для передачи даних 
+                url: '@Url.Action("Create", "Task")',// в метод Action передаємо "Create"-метод дії / "Task"-контроллер
+                data: $('#createTaskForm').serialize(), //дані які передаємо знаходяться в <form id="createTaskForm"> і за допомогою метода 
+                                                        //.serialize() групуємо всі дані які в <form> </form>
+                                                        
+                @*TODO: #16 опрацьовуємо успішний та не успішний результати додавання задачи *@
+                //якщо успішно було додано то буде така реакція.
+                //за допомогою сайта https://sweetalert2.github.io/#download додаємо бібліотеку реакцій   
+                                              
+                success: function (response) {
+                    Swal.fire({                    
+                      title: 'Інформація',
+                      text: response.description,                      
+                      width: 600,
+                      padding: '3em',
+                      customClass: {
+                        popup: 'custom-popup-class', //додали свій клас для стилізації
+                      },
+                      backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("https://media.tenor.com/-AyTtMgs2mMAAAAi/nyan-cat-nyan.gif")
+                        left top    
+                        no-repeat
+                      `
+                    });
+                },
+                //якщо буде помилка то буде така реакція
+                error: function (response) {
+                     Swal.fire({
+                        title: 'Інформація',
+                        text: response.responseJSON.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                     })
+                }
+            })
+        });
+    </script>
+    @*додаємо бібліотеку з сайту  https://sweetalert2.github.io/#download *@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
