@@ -95,6 +95,7 @@ public class TaskService : ITaskService
                     Priority = x.Priority.GetDisplayName(),
                     Created = x.Created.ToLongDateString()//розібратися що це за метод
                 })
+                .OrderByDescending(x => x.Id)//додав від себе сортування
                 .ToListAsync();
             return new BaseResponse<IEnumerable<TaskViewModel>>()
             {

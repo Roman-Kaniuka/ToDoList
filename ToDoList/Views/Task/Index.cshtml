@@ -102,12 +102,11 @@
                 success: function (response) {
                     Swal.fire({                    
                       title: 'Інформація',
+                      color: 'rgb(255,165,0)', //колір тексту "title"
                       text: response.description,                      
                       width: 600,
                       padding: '3em',
-                      customClass: {
-                        popup: 'custom-popup-class', //додали свій клас для стилізації
-                      },
+                      background: 'rgba(123,29,0,0.9)',//колір фону вікна яке вискакує
                       backdrop: `
                         rgba(0,0,123,0.4)
                         url("https://media.tenor.com/-AyTtMgs2mMAAAAi/nyan-cat-nyan.gif")
@@ -115,6 +114,8 @@
                         no-repeat
                       `
                     });
+                    // Оновлення таблиці після успішного створення завдання
+                        dataTable.ajax.reload(); // Оновлюємо дані в таблиці
                 },
                 //якщо буде помилка то буде така реакція
                 error: function (response) {
