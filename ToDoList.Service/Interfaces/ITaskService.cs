@@ -9,5 +9,9 @@ public interface ITaskService
 {
     //в "IBaseResponse<TaskEntity>" вказали "TaskEntity" це об'єкт який буде створюватись. Вхідний параметр буде об'єкт типу "CreateTaskViewModel"
     Task<IBaseResponse<TaskEntity>> Create(CreateTaskViewModel model); 
+    
+    //TODO: #22 щоб зробити якусь логіку для роботи з БД потрібен метод в "Servise" тому прописуємо його тут а реалізуємо далі в класі
+    //метод буде повертати колекцію даних типу "TaskViewModel"
+    Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(); 
 }
 

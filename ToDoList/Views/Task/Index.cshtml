@@ -48,14 +48,41 @@
 
     <script>
     
-    @*TODO: #19 За допомогою "jQuery" робимо запит до таблиці через  id="taskTableId"*@
+    //@*TODO: #19 За допомогою "jQuery" робимо запит до таблиці через  id="taskTableId"*@
     let dataTable = $('#taskTableId').DataTable({
     info:true, //загальна інформація про таблицю 
     serverSide:false, //якщо true то "sorting" та "paging" буде відбуватися на стороні сервера
     searching: false, //рядок пошуку
     paging: true, //к-сть елементів які буде показано
     sorting: false, //сортування
-    
+     //@*TODO: #20 Прописуємо логіку для таблиці (запит на сервер для отримання даних)*@
+     ajax:{
+         url:"@Url.Action("TaskHandler", "Task")", //@*TODO: #! можливо тут буде помилка через це я ХЗ, в прикладі без ", "Task""*@
+         method: 'POST',
+         data: null
+     },//@*TODO: #25 Реалізуємо відображення даних в самій табличці)*@
+     //функція для відображення колонок. !важливо дотримуватися того самого порядку колонок що отримуємо з БД
+     columns:[
+         {data:'name'},
+         {data:'priority'},
+         {data:'description'},
+         {data:'isDone'},
+         //тут буде кнопка тому такий код
+         {data:null,
+         sortable: false,
+         render: function (data, type){
+             return '<button class="btn btn-success btn-sm center-block">Виконати</button>'
+         }
+         },
+     ],
+     //тут прописуємо функцію яка відповідальна за створення рядків
+     createdRow: function (nRow, data){
+         for (var i = 0; i < dataTable.columns().header().length-1; i++){ //length-1 тому що в останній колонці в нас кнопка. можна протестити як працює
+             $('td', nRow).eq(i).css('cursor','pointer'); //при наведенні буде мінятися курсор             
+             $('td', nRow).eq(i).on('click',null); //по натиску буде відкриватися модальне вікно, але поки що null
+         }
+         $('td button', nRow).eq(i).on('click',null);
+     }
     });
     //Кнопка "Створити" має id="createTask", на цей id ми навісимо подію "клік"
         $('#createTask').on('click', function (e){  //для функції function () передали параметр "е" щоб потім викликати на ньому
@@ -68,7 +95,7 @@
                 data: $('#createTaskForm').serialize(), //дані які передаємо знаходяться в <form id="createTaskForm"> і за допомогою метода 
                                                         //.serialize() групуємо всі дані які в <form> </form>
                                                         
-                @*TODO: #16 опрацьовуємо успішний та не успішний результати додавання задачи *@
+              //  @*TODO: #16 опрацьовуємо успішний та не успішний результати додавання задачи *@
                 //якщо успішно було додано то буде така реакція.
                 //за допомогою сайта https://sweetalert2.github.io/#download додаємо бібліотеку реакцій   
                                               

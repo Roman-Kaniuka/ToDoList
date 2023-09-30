@@ -34,7 +34,14 @@ public class
         {
             return Ok(new { description = response.Description });
         }
-
         return BadRequest(new { description = response.Description });
     }
+//TODO: #21 переходим в "TaskController" щоб додати в метод дії, дію з отриманням даних з БД
+    [HttpPost]
+    public async Task<IActionResult> TaskHandler()
+    {
+        var response = await _taskService.GetTasks();
+        return Json(new { data = response.Date });
+    }
+    
 }
