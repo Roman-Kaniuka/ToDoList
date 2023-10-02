@@ -21,6 +21,19 @@
     </div>
     <button id="createTask" class="btn btn-primary">Створити</button>
 </form>
+@*TODO: #28 Додаємо поля для ввода значень для фільтрації*@
+<br/>
+<div class="row">
+    <div class="form-group col-md-6">
+        <label class="col-form-label">Назва</label>
+        <input name="nameTask" type="text" class="form-control"/>
+    </div>
+    <div class="form-group col-md-6">
+        <label class="col-form-label">Пріоритет</label>
+        <select id="prioritySearch" class="form-control mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    </div>
+</div>
+<br/>
 @*TODO: #18 Додаємо табличку представлення даних на сторінці використовуючи сайт https://datatables.net/*@
 <table class="table table-dark table-hover" id="taskTableId">
     <thead>
@@ -53,13 +66,13 @@
     info:true, //загальна інформація про таблицю 
     serverSide:false, //якщо true то "sorting" та "paging" буде відбуватися на стороні сервера
     searching: false, //рядок пошуку
-    paging: true, //к-сть елементів які буде показано
+    paging: false, //к-сть елементів які буде показано
     sorting: false, //сортування
      //@*TODO: #20 Прописуємо логіку для таблиці (запит на сервер для отримання даних)*@
      ajax:{
          url:"@Url.Action("TaskHandler", "Task")", //@*TODO: #! можливо тут буде помилка через це я ХЗ, в прикладі без ", "Task""*@
          method: 'POST',
-         data: null
+         data: model
      },//@*TODO: #25 Реалізуємо відображення даних в самій табличці)*@
      //функція для відображення колонок. !важливо дотримуватися того самого порядку колонок що отримуємо з БД
      columns:[
@@ -84,6 +97,27 @@
          $('td button', nRow).eq(i).on('click',null);
      }
     });
+     
+    
+    @*TODO: #29 -----*@
+        function model(){
+        return  {
+           Name: $('input[name="nameTask"]').val(),           
+            Priority: $('#prioritySearch option:selected').val()             
+            }
+     }
+    
+     
+     //обновляємо дані в табличці  
+                 $('input[name="nameTask"]').on('change', function () {
+                     dataTable.ajax.reload();
+                    
+                 });
+                 
+                 $('#prioritySearch').on('change', function () {
+                     dataTable.ajax.reload();
+                     
+                 });
     //Кнопка "Створити" має id="createTask", на цей id ми навісимо подію "клік"
         $('#createTask').on('click', function (e){  //для функції function () передали параметр "е" щоб потім викликати на ньому
             e.preventDefault();                     //цей метод який не обновляє значення полів після натиску на кнопку "Створити"
@@ -116,6 +150,7 @@
                     });
                     // Оновлення таблиці після успішного створення завдання
                         dataTable.ajax.reload(); // Оновлюємо дані в таблиці
+                   
                 },
                 //якщо буде помилка то буде така реакція
                 error: function (response) {

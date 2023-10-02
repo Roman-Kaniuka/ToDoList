@@ -3,12 +3,32 @@ using System.ComponentModel.DataAnnotations;
 namespace ToDoListDomain.Enum;
 //TODO: #2 Створили Enum для пріоритету завдань
 public enum Priority
-
-{ //для того щоб перечислення з Enum відображалися не анг а укр ми додаємо атрибут [Display]
+{ 
+    //для того щоб перечислення з Enum відображалися не анг а укр ми додаємо атрибут [Display]
+    [Display (Name ="-")]
+    NoN = 0,
     [Display (Name ="неважливі")]
     Easy = 1,
     [Display (Name ="менш важливі")]
     Medium = 2,
     [Display (Name ="важливі")]
     Hard = 3,
+    
+    
 }
+
+
+/*public enum PriorityRoma
+
+{ //для того щоб перечислення з Enum відображалися не анг а укр ми додаємо атрибут [Display]
+    
+    [Display (Name ="-")]
+    NoN = 0,
+    [Display (Name ="неважливі")]
+    Easy = 1,
+    [Display (Name ="менш важливі")]
+    Medium = 2,
+    [Display (Name ="важливі")]
+    Hard = 3,
+    
+}*/

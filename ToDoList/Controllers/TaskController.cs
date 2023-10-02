@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Service.Interfaces;
+using ToDoListDomain.Filters.Task;
 using ToDoListDomain.ViewModels.Task;
 
 namespace ToDoList.Controllers;
@@ -37,10 +38,12 @@ public class
         return BadRequest(new { description = response.Description });
     }
 //TODO: #21 переходим в "TaskController" щоб додати в метод дії, дію з отриманням даних з БД
+//TODO: #26 Для того щоб реалізувати пошук "фільтер" в таблиці додаємо параметр який буде приймати метод "TaskHandler()"
+//сюди з фронтенда будуть приходити параметри
     [HttpPost]
-    public async Task<IActionResult> TaskHandler()
+    public async Task<IActionResult> TaskHandler(TaskFilter filter)
     {
-        var response = await _taskService.GetTasks();
+        var response = await _taskService.GetTasks(filter);
         return Json(new { data = response.Date });
     }
     

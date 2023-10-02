@@ -14,6 +14,10 @@ public class CreateTaskViewModel
     //TODO: #17 Додаємо валідацію для перевірки чи заповнені всі поля
     public void Validate()
     {
+        if (Priority==Priority.NoN)
+        {
+            throw new ArgumentNullException("", "Вкажіть пріоритет");
+        }
         // перевіряємо чи дійсно поле пусте якщо так то кидаємо виключення
         if (string.IsNullOrWhiteSpace(Name))
         {

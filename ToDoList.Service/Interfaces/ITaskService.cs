@@ -1,4 +1,5 @@
 using ToDoListDomain.Entity;
+using ToDoListDomain.Filters.Task;
 using ToDoListDomain.Response;
 using ToDoListDomain.ViewModels.Task;
 
@@ -12,6 +13,7 @@ public interface ITaskService
     
     //TODO: #22 щоб зробити якусь логіку для роботи з БД потрібен метод в "Servise" тому прописуємо його тут а реалізуємо далі в класі
     //метод буде повертати колекцію даних типу "TaskViewModel"
-    Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(); 
+    //TODO: #27 Для реалізації фільтрації даних треба додати параметр "TaskFilter" в метод "GetTasks"
+    Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter); 
 }
 

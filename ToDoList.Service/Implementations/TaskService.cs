@@ -5,6 +5,7 @@ using ToDoList.Service.Interfaces;
 using ToDoListDomain.Entity;
 using ToDoListDomain.Enum;
 using ToDoListDomain.Extenstions;
+using ToDoListDomain.Filters.Task;
 using ToDoListDomain.Response;
 using ToDoListDomain.ViewModels.Task;
 
@@ -80,11 +81,15 @@ public class TaskService : ITaskService
         }
     }
 //TODO: #23 імплементуємомо (реалізуємо) метод "GetTasks()"
-    public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks()
+    public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter)
     {
         try
         {
             var tasks = await _taskRepository.GetAll()
+                //додаємо рядок для фільтрації даних  по імені
+                .WhereIf(!string.IsNullOrWhiteSpace(filter.Name),x=>x.Name==filter.Name)
+                //додаємо рядок для фільтрації даних  по пріоритету
+                .WhereIf((int)filter.Priority!=0,x=>x.Priority==filter.Priority)
                 .Select(x => new TaskViewModel()
                 {
                     Id = x.Id,
