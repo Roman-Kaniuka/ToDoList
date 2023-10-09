@@ -15,5 +15,8 @@ public interface ITaskService
     //метод буде повертати колекцію даних типу "TaskViewModel"
     //TODO: #27 Для реалізації фільтрації даних треба додати параметр "TaskFilter" в метод "GetTasks"
     Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter); 
+    
+    //TODO: #35 Прописуэмо контракт для метода EndTask
+    Task<IBaseResponse<bool>> EndTask(long id); 
 }
 

@@ -21,7 +21,7 @@
     </div>
     <button id="createTask" class="btn btn-primary">Створити</button>
 </form>
-@*TODO: #28 Додаємо поля для ввода значень для фільтрації*@
+@*TODO: #29 Додаємо поля для ввода значень для фільтрації*@
 <br/>
 <div class="row">
     <div class="form-group col-md-6">
@@ -58,10 +58,18 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     @*додаємо бібліотеку з сайту  https://sweetalert2.github.io/#download *@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
+    //@*TODO: #32 Додаємо дію на кнопку "Виконати". Буде також анімація за допомогою https://sweetalert2*@
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+       cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
     
-    //@*TODO: #19 За допомогою "jQuery" робимо запит до таблиці через  id="taskTableId"*@
+    
+    
     let dataTable = $('#taskTableId').DataTable({
     info:true, //загальна інформація про таблицю 
     serverSide:false, //якщо true то "sorting" та "paging" буде відбуватися на стороні сервера
@@ -72,7 +80,7 @@
      ajax:{
          url:"@Url.Action("TaskHandler", "Task")", //@*TODO: #! можливо тут буде помилка через це я ХЗ, в прикладі без ", "Task""*@
          method: 'POST',
-         data: model
+         data: model //після кроку #30 передаємо сюди дані з функції
      },//@*TODO: #25 Реалізуємо відображення даних в самій табличці)*@
      //функція для відображення колонок. !важливо дотримуватися того самого порядку колонок що отримуємо з БД
      columns:[
@@ -89,17 +97,85 @@
          },
      ],
      //тут прописуємо функцію яка відповідальна за створення рядків
+     
      createdRow: function (nRow, data){
+        //@*TODO: #33 навішуємо події які будуть відбуватися після натискання кнопок "Виконати"*@
+         var handlerComplete = function (){
+             swalWithBootstrapButtons.fire({
+               title: 'Ви впевнені?',
+               text: "Це завдання буде відмічено як виконане!",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonText: 'Так!',
+               cancelButtonText: 'Ні!',
+               reverseButtons: true
+             }).then((result) => {
+               
+                 if (result.isConfirmed) {
+                   //частина коду яка спрацює якщо натисну ти кнопку "Так"
+                 $.ajax({
+                 type:'POST',
+                 url:'@Url.Action("EndTask")',//вказуємо метод який буде спрацьовувати
+                 data: {id: data.id},//вказуємо дані які будуть передаватися                
+                 
+                 //якщо успішно було додано то буде така реакція.
+                 success: function (response) {
+                                    Swal.fire({                    
+                                      title: 'Інформація',
+                                      color: 'rgb(255,165,0)', //колір тексту "title"
+                                      text: response.description,                      
+                                      width: 600,
+                                      padding: '3em',
+                                      background: 'rgba(123,29,0,0.9)',//колір фону вікна яке вискакує
+                                      backdrop: 
+                                      `
+                                        rgba(0,0,123,0.4)
+                                        url("https://media.tenor.com/-AyTtMgs2mMAAAAi/nyan-cat-nyan.gif")
+                                        left top    
+                                        no-repeat
+                                      `
+                                    });
+                                    // Оновлення таблиці після успішного створення завдання
+                                        dataTable.ajax.reload(); // Оновлюємо дані в таблиці
+                                   
+                                },
+                                //якщо буде помилка то буде така реакція
+                                error: function (response) {
+                                     Swal.fire({
+                                        title: 'Інформація',
+                                        text: response.responseJSON.description,
+                                        icon: 'error',
+                                        confirmButtonText: 'Окей'
+                                     })
+                                }
+                 })                 
+               }                 
+                 else if (
+                     /* Read more about handling dismissals below */
+                     result.dismiss === Swal.DismissReason.cancel
+                   ) {
+                     swalWithBootstrapButtons.fire(
+                       'Відхилено',
+                       'Завдання досі не виконано:)',                       
+                     
+                     )
+                   
+                 }           
+             
+             } )              
+         
+         }
+         
          for (var i = 0; i < dataTable.columns().header().length-1; i++){ //length-1 тому що в останній колонці в нас кнопка. можна протестити як працює
              $('td', nRow).eq(i).css('cursor','pointer'); //при наведенні буде мінятися курсор             
              $('td', nRow).eq(i).on('click',null); //по натиску буде відкриватися модальне вікно, але поки що null
          }
-         $('td button', nRow).eq(i).on('click',null);
+         $('td button', nRow).on('click',handlerComplete);//додаємо подію на кнопку щоб вона спрацьовувала по натиску
      }
     });
      
     
-    @*TODO: #29 -----*@
+    @*TODO: #30 Додаємо метод який зчитує значення введені користувачем*@
         function model(){
         return  {
            Name: $('input[name="nameTask"]').val(),           
@@ -107,16 +183,14 @@
             }
      }
     
-     
+     @*TODO: #31 Налаштовуємо щоб після когожної фільтрації даних таблиця оновлювалася*@
      //обновляємо дані в табличці  
                  $('input[name="nameTask"]').on('change', function () {
-                     dataTable.ajax.reload();
-                    
+                     dataTable.ajax.reload();                    
                  });
                  
                  $('#prioritySearch').on('change', function () {
-                     dataTable.ajax.reload();
-                     
+                     dataTable.ajax.reload();                     
                  });
     //Кнопка "Створити" має id="createTask", на цей id ми навісимо подію "клік"
         $('#createTask').on('click', function (e){  //для функції function () передали параметр "е" щоб потім викликати на ньому
@@ -141,7 +215,8 @@
                       width: 600,
                       padding: '3em',
                       background: 'rgba(123,29,0,0.9)',//колір фону вікна яке вискакує
-                      backdrop: `
+                      backdrop: 
+                      `
                         rgba(0,0,123,0.4)
                         url("https://media.tenor.com/-AyTtMgs2mMAAAAi/nyan-cat-nyan.gif")
                         left top    

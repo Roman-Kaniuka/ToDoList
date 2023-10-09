@@ -86,6 +86,7 @@ public class TaskService : ITaskService
         try
         {
             var tasks = await _taskRepository.GetAll()
+                .Where(x=>x.IsDone==false)
                 //додаємо рядок для фільтрації даних  по імені
                 .WhereIf(!string.IsNullOrWhiteSpace(filter.Name),x=>x.Name==filter.Name)
                 //додаємо рядок для фільтрації даних  по пріоритету
@@ -112,6 +113,44 @@ public class TaskService : ITaskService
         {
             _logger.LogError(ex, $"[TaskService.Create()]-{ex.Message}");
             return new BaseResponse<IEnumerable<TaskViewModel>>()
+            {
+                Description = $"{ex.Message}",
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
+//TODO: #36 Імплементуємо метод "EndTask"
+    public async Task<IBaseResponse<bool>> EndTask(long id)
+    {
+        try
+        {
+            //отримуємо значення яке співпадаєе по "id"
+            var task = await _taskRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            //перевіряємо чи значення не null про всяк
+            if (task == null)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = "Завдання не знайдено",
+                    StatusCode = StatusCode.TaskNotFound
+                };
+            }
+            //міняємо значення поля для того щоб вказати що завдання вже готову
+            task.IsDone = true;
+            //зберігаємо зміни в БД
+            await _taskRepository.Update(task);
+            
+            return new BaseResponse<bool>()
+            {
+                Description = "Завдання виконано",
+                StatusCode = StatusCode.OK
+            };
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"[TaskService.EndTask()]-{ex.Message}");
+            return new BaseResponse<bool>()
             {
                 Description = $"{ex.Message}",
                 StatusCode = StatusCode.InternalServerError

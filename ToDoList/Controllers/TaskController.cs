@@ -47,4 +47,17 @@ public class
         return Json(new { data = response.Date });
     }
     
+    //TODO: #34 переходим в "TaskController" щоб додати в метод дії, на "EndTask"
+    [HttpPost]
+    public async Task<IActionResult> EndTask(long id)
+    {
+        var response = await _taskService.EndTask(id);
+        //якщо статус код "ОК" то ми записуємо в "description" інформацію яку в подальшому можна буде показати на сторінці
+        if (response.StatusCode == ToDoListDomain.Enum.StatusCode.OK)
+        {
+            return Ok(new { description = response.Description });
+        }
+        return BadRequest(new { description = response.Description });
+    }
+    
 }
