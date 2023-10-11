@@ -18,5 +18,8 @@ public interface ITaskService
     
     //TODO: #35 Прописуэмо контракт для метода EndTask
     Task<IBaseResponse<bool>> EndTask(long id); 
+    //TODO #39 Прописуємо сігнатуру метода який буде отримувати всі виконані задачи за сьогоднішній день
+    Task<IBaseResponse<IEnumerable<TaskCompletedViewModel>>> GetCompletedTasks(); 
+    
 }
 

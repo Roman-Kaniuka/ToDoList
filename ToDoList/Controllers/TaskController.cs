@@ -59,5 +59,12 @@ public class
         }
         return BadRequest(new { description = response.Description });
     }
-    
+    //TODO #38 створюємо метод який буде викликано для відображення виконаних задач за сьогодні
+    public async Task<IActionResult> GetCompletedTasks()
+    {
+        //викликаэмо метод створений кроком #40 
+        var result = await _taskService.GetCompletedTasks();
+        return Json(new { data = result.Date });
+    }
+
 }

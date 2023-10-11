@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Reflection.Metadata
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -37,6 +38,7 @@
                 <span class="text-muted">Виконані завдання</span>
                 <span class="badge badge-secondary badge-pill text-muted" id="countOfCompletedTasks"></span>
             </h4>
+            @*в цей блок коду буде вставлятися список (таблиця) виконаних задач*@
             <ul class="list-group mb-3" id="completedListTasks"></ul>
             <form>
                 <div class="card col-md-12">
@@ -56,6 +58,34 @@
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@*TODO: #37 Додаємо скрипт який буде робити запит до БД для отримання задач виконаних за сьогодні*@
+<script >
+$(document).ready(function (){
+    $.ajax({
+    type:'GET', //'GET' бо тільки отримуємо дані
+    url:'@Url.Action("GetCompletedTasks", "Task")', //метод дії
+    //якщо успішно то виконується цей код
+    success: function (data){ 
+        const ulElement = $('#completedListTasks');
+        for (var i=0; i<data.data.length; i++){
+            const task = data.data[i];
+            //всередині функціх "append" вставляємо розмітку яка буде відображатися в "completedListTasks"
+            ulElement.append(`
+            <li class="list-group-item d-flex justify-content-between lh-condensed" style = "background-color: #affabf">
+                <div>
+                    <h6 class="my-0">Назва: ${task.name}</h6>
+                    <small class="text-muted">Опис: ${task.description}</small>  
+                </div>                
+            </li>
+            `)
+        }
+        @*скрипт який просто буде відображати кількість повернути записів тобто кількість виконаних задач за сьогодні*@
+        $('#countOfCompletedTasks').text(data.data.length);
+    }    
+    })    
+})
+
+</script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
